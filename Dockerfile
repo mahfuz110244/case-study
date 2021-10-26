@@ -10,6 +10,7 @@ WORKDIR /app/src
 
 RUN apt-get update && apt-get install build-essential curl -y
 RUN pip3 install -U pip
+RUN pip3 install --upgrade pip
 ADD requirements.txt ./
 RUN pip3 install -r requirements.txt && \
     apt-get --purge autoremove build-essential -y

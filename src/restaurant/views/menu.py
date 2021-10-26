@@ -1,8 +1,6 @@
 import logging
 from datetime import date
 
-from base.documentation import jwt_header
-from base.permissions import IsEmployee, IsManager
 from django.utils.decorators import method_decorator
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
@@ -15,6 +13,9 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from base.documentation import jwt_header
+from base.permissions import IsEmployee, IsManager
 from restaurant.models import Menu
 from restaurant.serializers import MenuListSerializer, MenuSerializer
 
@@ -39,15 +40,6 @@ class MenuViewSet(viewsets.ModelViewSet):
     filter_fields = ['name', 'menu_date', 'restaurant__name']
     http_method_names = ['get', 'post']
 
-    # def get_queryset(self):
-    #     if IsAdminUser.has_permission(self, request=self.request, view=self.get_view_name()):
-    #         return super().get_queryset()
-    #     elif IsEmployee.has_permission(self, request=self.request, view=self.get_view_name()):
-    #         if self.request.query_params.get('menu_date'):
-    #             return super().get_queryset()
-    #         raise PermissionDenied()
-    #     return super().get_queryset().filter(restaurant__manager=self.request.user)
-
     def get_permissions(self):
         if self.action == 'create':
             permission_classes = [IsManager]
@@ -61,23 +53,3 @@ class MenuViewSet(viewsets.ModelViewSet):
         if self.action in ['list', 'retrieve']:
             return MenuListSerializer
         return MenuSerializer
-
-
-@method_decorator(name='get', decorator=swagger_auto_schema(manual_parameters=[jwt_header]))
-class MenuList(APIView):
-    permission_classes = [Or(IsEmployee, IsAdminUser)]
-    authentication_classes = [JWTAuthentication]
-    """
-    An API endpoint for Getting current day menu
-    """
-    def get(self, request):
-        try:
-            queryset = Menu.objects.filter(menu_date=date.today()).select_related('restaurant')
-            serializer_context = {
-                'request': request
-            }
-            serializer = MenuListSerializer(queryset, context=serializer_context, many=True)
-            return Response(serializer.data)
-        except Exception as e:
-            logger.error(f"Error in {request.resolver_match.view_name}, error: {e}")
-            return Response({'message': "Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -1,2 +1,2 @@
-from .menu import MenuList, MenuViewSet
+from .menu import MenuViewSet
 from .restaurant import RestaurantViewSet

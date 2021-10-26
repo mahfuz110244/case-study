@@ -44,6 +44,7 @@ v1_patterns = [
     path('', HealthCheckAPI.as_view(), name='health-check-api'),
     path('/users/', include('users.urls', namespace='users-api')),
     path('/restaurant/', include('restaurant.urls', namespace='restaurant-api')),
+    path('/vote/', include('vote.urls', namespace='vote-api')),
 ]
 
 urlpatterns = [
