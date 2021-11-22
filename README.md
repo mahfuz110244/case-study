@@ -16,4 +16,3 @@ Bongo case study
 
 ## Note
 - Employee can vote only one in a day before configure deadline time and result will be published after deadline.
-- 
