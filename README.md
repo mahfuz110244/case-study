@@ -13,4 +13,6 @@ Bongo case study
 - run `./manage.py test` in docker container for unit testing
 - if everything goes right check the health check url at `http://localhost:8000/api/v1`
 - check swagger API documentation at `http://localhost:8000/doc/`
+
+## Note
 - Employee can vote only one in a day before configure deadline time and result will be published after deadline.
