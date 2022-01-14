@@ -14,6 +14,7 @@ class UserBaseTestCase(APITestCase):
         self.employee_url = reverse("users:employee-list")
         self.restaurant_url = reverse("restaurant:restaurant-list")
         self.menu_url = reverse("restaurant:restaurant-menu-list")
+        self.menu_view_url = reverse("restaurant:today-menu-list")
 
         self.vote_url = reverse("vote:vote-list")
         self.vote_result_url = reverse("vote:voting-result-today")

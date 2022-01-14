@@ -1,2 +1,2 @@
-from .menu import MenuListSerializer, MenuSerializer
+from .menu import MenuListSerializer, MenuSerializer, MenuDetailsSerializer
 from .restaurant import RestaurantDetailsSerializer, RestaurantSerializer

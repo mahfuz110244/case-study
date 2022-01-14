@@ -18,7 +18,7 @@ class MenuSerializer(serializers.ModelSerializer):
         return attrs
 
 
-class MenuListSerializer(serializers.ModelSerializer):
+class MenuDetailsSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField(required=False)
     restaurant = RestaurantDetailsSerializer()
 
@@ -26,6 +26,21 @@ class MenuListSerializer(serializers.ModelSerializer):
         model = Menu
         fields = ['id', 'name', 'image', 'description', 'menu_date', 'price', 'restaurant',
                   'created_by', 'updated_by', 'created_at', 'updated_at']
+
+    def get_image(self, instance):
+        image_url = None
+        request = self.context.get('request', None)
+        if instance.image:
+            image_url = request.build_absolute_uri(instance.image.url)
+        return image_url
+
+
+class MenuListSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField(required=False)
+
+    class Meta:
+        model = Menu
+        fields = ['id', 'name', 'image', 'description', 'menu_date', 'price']
 
     def get_image(self, instance):
         image_url = None

@@ -17,7 +17,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from base.documentation import jwt_header
 from base.permissions import IsEmployee, IsManager
 from restaurant.models import Menu
-from restaurant.serializers import MenuListSerializer, MenuSerializer
+from restaurant.serializers import MenuListSerializer, MenuSerializer, MenuDetailsSerializer
 
 logger = logging.getLogger('voting_app')
 
@@ -50,8 +50,10 @@ class MenuViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
     def get_serializer_class(self):
-        if self.action in ['list', 'retrieve']:
+        if self.action in ['list']:
             return MenuListSerializer
+        if self.action in ['retrieve']:
+            return MenuDetailsSerializer
         return MenuSerializer
 
 
@@ -70,6 +72,7 @@ class MenuList(APIView):
             }
             serializer = MenuListSerializer(queryset, context=serializer_context, many=True)
             return Response(serializer.data)
+
         except Exception as e:
             logger.error(f"Error in {request.resolver_match.view_name}, error: {e}")
             return Response({'message': "Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
