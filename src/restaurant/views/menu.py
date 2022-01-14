@@ -53,3 +53,23 @@ class MenuViewSet(viewsets.ModelViewSet):
         if self.action in ['list', 'retrieve']:
             return MenuListSerializer
         return MenuSerializer
+
+
+@method_decorator(name='get', decorator=swagger_auto_schema(manual_parameters=[jwt_header]))
+class MenuList(APIView):
+    permission_classes = [Or(IsEmployee, IsAdminUser)]
+    authentication_classes = [JWTAuthentication]
+    """
+    An API endpoint for Getting current day menu
+    """
+    def get(self, request):
+        try:
+            queryset = Menu.objects.filter(menu_date=date.today()).select_related('restaurant')
+            serializer_context = {
+                'request': request
+            }
+            serializer = MenuListSerializer(queryset, context=serializer_context, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            logger.error(f"Error in {request.resolver_match.view_name}, error: {e}")
+            return Response({'message': "Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

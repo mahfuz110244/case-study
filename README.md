@@ -1,6 +1,3 @@
-# case-study Voting App
-Bongo case study
-
 ## Installation
 
 - rename `example.env` to `.env` and set the correct configurations

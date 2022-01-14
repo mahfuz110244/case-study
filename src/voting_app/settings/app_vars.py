@@ -5,7 +5,6 @@ from .base import BASE_DIR
 # django vars
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = os.environ.get('TIME_ZONE', 'Asia/Dhaka')
-# CELERY_TIMEZONE = os.environ.get('TIME_ZONE', 'Asia/Dhaka')
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
