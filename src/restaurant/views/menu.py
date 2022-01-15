@@ -17,7 +17,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from base.documentation import jwt_header
 from base.permissions import IsEmployee, IsManager
 from restaurant.models import Menu
-from restaurant.serializers import MenuListSerializer, MenuSerializer, MenuDetailsSerializer
+from restaurant.serializers import (MenuDetailsSerializer, MenuListSerializer,
+                                    MenuSerializer)
 
 logger = logging.getLogger('voting_app')
 

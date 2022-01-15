@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework import routers
 
-from restaurant.views import MenuViewSet, RestaurantViewSet, MenuList
+from restaurant.views import MenuList, MenuViewSet, RestaurantViewSet
 
 app_name = 'restaurant'
 router = routers.SimpleRouter()
