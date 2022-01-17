@@ -1,21 +1,21 @@
 version: "3"
 
 services:
-  db:
-    image: postgres:latest
-    environment:
-      - POSTGRES_USER=myuser
-      - POSTGRES_PASSWORD=mypass
-      - POSTGRES_DB=vote
-    ports:
-      - 5432:5432
+  # db:
+  #   image: postgres:latest
+  #   environment:
+  #     - POSTGRES_USER=myuser
+  #     - POSTGRES_PASSWORD=mypass
+  #     - POSTGRES_DB=vote
+  #   ports:
+  #     - 5432:5432
 
   app:
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      - db
+      - mysql-master
     restart: always
     volumes:
       - ./src:/app/src
